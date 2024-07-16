@@ -1,5 +1,5 @@
 [package]
-name = "rndtable-toml-parser"
+name = "rndtable-parser-toml"
 version = "0.1.0"
 edition = "2021"
 
