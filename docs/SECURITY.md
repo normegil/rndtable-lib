@@ -2,9 +2,9 @@
 
 ## Reporting a Vulnerability
 
-If there are any vulnerabilities in **rndtable-parser-toml**, don't hesitate to _report them_.
+If there are any vulnerabilities in **rndtable**, don't hesitate to _report them_.
 
-1. Use any of the [private contact addresses](https://github.com/normegil/rndtable-parser-toml#support).
+1. Use any of the [private contact addresses](https://github.com/normegil/rndtable#support).
 2. Describe the vulnerability.
 
    If you have a fix, that is most welcome -- please attach or summarize it in your message!

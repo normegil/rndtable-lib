@@ -3,5 +3,5 @@
 version = 3
 
 [[package]]
-name = "rndtable-parser-toml"
+name = "rndtable"
 version = "0.1.0"

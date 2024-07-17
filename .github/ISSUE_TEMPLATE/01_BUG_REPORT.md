@@ -1,6 +1,6 @@
 ---
 name: Bug Report
-about: Create a report to help rndtable-parser-toml to improve
+about: Create a report to help rndtable to improve
 title: "bug: "
 labels: "bug"
 assignees: ""
@@ -8,7 +8,7 @@ assignees: ""
 
 # Bug Report
 
-**rndtable-parser-toml version:**
+**rndtable version:**
 
 <!-- Please specify commit or tag version. -->
 
