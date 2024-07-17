@@ -1,6 +1,6 @@
 use thiserror::Error;
 
-mod filesystem;
+pub mod filesystem;
 
 #[derive(Error, Debug)]
 pub enum ReadError {

@@ -17,12 +17,12 @@ impl SupportedFormat {
     }
 }
 
-pub struct FileSystemLoader<P: AsRef<Path>> {
+pub struct FilesystemLoader<P: AsRef<Path>> {
     format: SupportedFormat,
     base_path: P,
 }
 
-impl<P: AsRef<Path>> Reader for FileSystemLoader<P> {
+impl<P: AsRef<Path>> Reader for FilesystemLoader<P> {
     fn read(&self, id: String) -> Result<String, super::ReadError> {
         let path: PathBuf = self
             .base_path
