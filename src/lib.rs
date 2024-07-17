@@ -1,2 +1,2 @@
-mod parsers;
 mod model;
+mod parsers;

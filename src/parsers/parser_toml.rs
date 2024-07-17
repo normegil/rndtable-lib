@@ -10,14 +10,17 @@ impl TableParser for Parser {}
 
 impl TableDeserializer for Parser {
     fn deserialize(&self, source: &str) -> Result<RandomTable, DeserializerError> {
-        let toml_rnd_table: TomlRandomTable = toml::from_str(source)
-            .map_err(|source| DeserializerError::TOMLDeserialization { deserialize: source.to_string(), source })?;
+        let toml_rnd_table: TomlRandomTable =
+            toml::from_str(source).map_err(|source| DeserializerError::TOMLDeserialization {
+                deserialize: source.to_string(),
+                source,
+            })?;
         Ok(toml_rnd_table.try_into()?)
     }
 }
 
 impl TableSerializer for Parser {
-    fn serialize(&self,source: &RandomTable) -> Result<String, SerializerError> {
+    fn serialize(&self, source: &RandomTable) -> Result<String, SerializerError> {
         let toml_rndtable = TomlRandomTable::from(source);
         toml::to_string_pretty(&toml_rndtable).map_err(|source| {
             SerializerError::TOMLSerialization {
@@ -42,7 +45,10 @@ impl From<&RandomTable> for TomlRandomTable {
             entry.push(TomlEntry::from(source_entry))
         }
 
-        Self { entry, name: value.name.to_string() }
+        Self {
+            entry,
+            name: value.name.to_string(),
+        }
     }
 }
 
@@ -54,12 +60,14 @@ pub struct TomlEntry {
 
 impl From<&Entry> for TomlEntry {
     fn from(value: &Entry) -> Self {
-        let keys = if value.lower_bound == value.upper_bound {
-            value.lower_bound.to_string()
-        } else if value.lower_bound < value.upper_bound {
-            value.lower_bound.to_string() + "-" + &value.upper_bound.to_string()
-        } else {
-            value.upper_bound.to_string() + "-" + &value.lower_bound.to_string()
+        let keys = match value.lower_bound.cmp(&value.upper_bound) {
+            std::cmp::Ordering::Equal => value.lower_bound.to_string(),
+            std::cmp::Ordering::Less => {
+                value.lower_bound.to_string() + "-" + &value.upper_bound.to_string()
+            }
+            std::cmp::Ordering::Greater => {
+                value.upper_bound.to_string() + "-" + &value.lower_bound.to_string()
+            }
         };
         TomlEntry {
             keys,
@@ -88,7 +96,7 @@ mod tests {
             text = "Entry 7"
         "#;
 
-        let result = Parser{}.deserialize(toml_data);
+        let result = Parser {}.deserialize(toml_data);
         let random_table = result.unwrap();
 
         assert_eq!(random_table.name, "Sample Table");
@@ -111,18 +119,21 @@ mod tests {
     fn test_serialize() {
         let random_table = RandomTable {
             name: "Sample Table".to_string(),
-            entries: vec![Entry {
-                lower_bound: 1,
-                upper_bound: 3,
-                text: String::from("First entry"),
-            }, Entry {
-                lower_bound: 4,
-                upper_bound: 4,
-                text: String::from("Second entry"),
-            }],
+            entries: vec![
+                Entry {
+                    lower_bound: 1,
+                    upper_bound: 3,
+                    text: String::from("First entry"),
+                },
+                Entry {
+                    lower_bound: 4,
+                    upper_bound: 4,
+                    text: String::from("Second entry"),
+                },
+            ],
         };
 
-        let result = Parser{}.serialize(&random_table);
+        let result = Parser {}.serialize(&random_table);
 
         let toml_string = result.unwrap();
         let expected_toml = r#"
