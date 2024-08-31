@@ -21,8 +21,8 @@ impl TableDeserializer for Parser {
 
 impl TableSerializer for Parser {
     fn serialize(&self, source: &RandomTable) -> Result<String, SerializerError> {
-        let toml_rndtable = TomlRandomTable::from(source);
-        toml::to_string_pretty(&toml_rndtable).map_err(|source| {
+        let toml_rndtable-lib = TomlRandomTable::from(source);
+        toml::to_string_pretty(&toml_rndtable-lib).map_err(|source| {
             SerializerError::TOMLSerialization {
                 to_serialize: format!("{:?}", source),
                 source,
